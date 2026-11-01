@@ -1,0 +1,7 @@
+configuration:
+  check_minutes:
+    name: Check every (minutes)
+    description: How often sources are checked and alerts looked at. 0 checks only when asked, and alerts do not run.
+  keep_days:
+    name: Keep forecasts (days)
+    description: Older ones are removed, but a source's newest file always stays. 0 keeps everything.

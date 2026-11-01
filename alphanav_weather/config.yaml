@@ -1,0 +1,25 @@
+name: AlphaNav Weather
+version: "1.0.1"
+slug: alphanav_weather
+description: Checks weather sources, takes the forecasts you ask for and cuts them small for the boat.
+url: https://github.com/giomengu/alphanav-weather-addon
+arch:
+  - aarch64
+  - amd64
+startup: application
+init: false
+homeassistant_api: true
+ingress: true
+ingress_port: 3010
+panel_icon: mdi:weather-windy
+panel_title: Weather
+ports:
+  3010/tcp: 3010
+ports_description:
+  3010/tcp: For the boat, and a browser outside Home Assistant
+options:
+  check_minutes: 15
+  keep_days: 7
+schema:
+  check_minutes: int(0,)
+  keep_days: int(0,)
