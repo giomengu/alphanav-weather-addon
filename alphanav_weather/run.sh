@@ -12,9 +12,9 @@ export WEATHER_KEEP_HOURS="$(( ${days:-7} * 24 ))"
 if [ -n "${SUPERVISOR_TOKEN:-}" ]; then
 	export WEATHER_INGRESS_PEER=172.30.32.2
 fi
-# Both IPv4 and IPv6 where the machine has it: homeassistant.local answers on IPv6 first, and Docker passes
-# that on to an address nothing would be listening on.
-if [ -s /proc/net/if_inet6 ]; then
-	export WEATHER_HOST=::
+# Both IPv4 and IPv6 where the machine allows it: homeassistant.local answers on IPv6 first, and Docker passes
+# that on to an address nothing would be listening on. If it cannot, IPv4 still serves.
+if [ "${WEATHER_HOST:-}" != "127.0.0.1" ] && [ "$(cat /proc/sys/net/ipv6/conf/all/disable_ipv6 2>/dev/null)" = "0" ]; then
+	WEATHER_HOST=:: /app/WeatherServer || echo "Could not listen on IPv6: IPv4 only." >&2
 fi
 exec /app/WeatherServer
